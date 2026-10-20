@@ -22,6 +22,7 @@ module.exports = [
         { argsIgnorePattern: '^(req|res|next|val)$' },
       ],
       'n/no-process-exit': 'off',
+      'prettier/prettier': 'warn',
     },
   },
   {

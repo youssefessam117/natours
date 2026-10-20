@@ -28,4 +28,13 @@ app.all('/{*splat}', (req, res, next) => {
   });
 });
 
+app.use((err, req, res, next) => {
+  err.setStatusCode = err.statusCode || 500;
+  err.setStatus = err.status || 'error';
+  res.status(err.setStatusCode).json({
+    status: err.setStatus,
+    message: err.message,
+  });
+});
+
 module.exports = app;
