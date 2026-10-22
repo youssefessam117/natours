@@ -10,16 +10,23 @@ const DB = process.env.DATABASE.replace(
   process.env.DATABASE_PASSWORD,
 );
 
-mongoose
-  .connect(DB)
-  .then(() => {
-    console.log('DB connection successful!');
-  })
-  .catch((err) => {
-    console.log('DB connection error:', err);
-  });
+mongoose.connect(DB).then(() => {
+  // eslint-disable-next-line no-console
+  console.log('DB connection successful!');
+});
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`App running on port ${port}...`);
+});
+
+process.on('unhandledRejection', (err) => {
+  // eslint-disable-next-line no-console
+  console.log(err.name, err.message);
+  // eslint-disable-next-line no-console
+  console.log('UNHANDLER REJECTION shuting down ....');
+  server.close(() => {
+    process.exit(1);
+  });
 });
